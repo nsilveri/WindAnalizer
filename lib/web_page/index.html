@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anemometro - Dati Sensori</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .sensor {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px auto;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .sensor p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .value {
+            font-weight: bold;
+            color: #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Anemometro</h1>
+    <div class="sensor">
+        <p>Temperatura: <span class="value" id="temp">--</span> °C</p>
+    </div>
+    <div class="sensor">
+        <p>Umidità: <span class="value" id="hum">--</span> %</p>
+    </div>
+    <div class="sensor">
+        <p>Velocità Vento: <span class="value" id="wind">--</span> m/s</p>
+    </div>
+    <div class="sensor">
+        <p>LED Onboard</p>
+        <a href="?led=on"><button>ON</button></a>
+        <a href="?led=off"><button>OFF</button></a>
+    </div>
+    <script>
+        // Funzione per aggiornare i dati
+        async function updateData() {
+            try {
+                const response = await fetch('/data');
+                const data = await response.json();
+                document.getElementById('temp').textContent = data.temp || '--';
+                document.getElementById('hum').textContent = data.hum || '--';
+                document.getElementById('wind').textContent = data.wind || '--';
+            } catch (error) {
+                console.log('Errore nell\'aggiornamento dati:', error);
+            }
+        }
+        updateData();
+        setInterval(updateData, 5000); // Aggiorna ogni 5 secondi
+    </script>
+</body>
+</html>
