@@ -1,3 +1,6 @@
 [submodule "lib/MicroPyDatabase"]
 	path = lib/MicroPyDatabase
 	url = https://github.com/sungkhum/MicroPyDatabase.git
+[submodule "lib/micropython-telegram-bot"]
+	path = lib/micropython-telegram-bot
+	url = https://github.com/antirez/micropython-telegram-bot.git
