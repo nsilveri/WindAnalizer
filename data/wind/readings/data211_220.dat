@@ -1,0 +1,10 @@
+{"d": {"timestamp": "1609459535", "outofscale": "True", "windspeed": "1.252"}, "r": 211}
+{"d": {"timestamp": "1609459536", "outofscale": "True", "windspeed": "1.3768001"}, "r": 212}
+{"d": {"timestamp": "1609459537", "outofscale": "True", "windspeed": "1.6264"}, "r": 213}
+{"d": {"timestamp": "1609459538", "outofscale": "False", "windspeed": "2.6248002"}, "r": 214}
+{"d": {"timestamp": "1609459539", "outofscale": "False", "windspeed": "3.2488002"}, "r": 215}
+{"d": {"timestamp": "1609459540", "outofscale": "False", "windspeed": "3.8728"}, "r": 216}
+{"d": {"timestamp": "1609459541", "outofscale": "False", "windspeed": "4.372"}, "r": 217}
+{"d": {"timestamp": "1609459542", "outofscale": "False", "windspeed": "5.1208"}, "r": 218}
+{"d": {"timestamp": "1609459543", "outofscale": "False", "windspeed": "5.6200004"}, "r": 219}
+{"d": {"timestamp": "1609459544", "outofscale": "False", "windspeed": "5.9944"}, "r": 220}

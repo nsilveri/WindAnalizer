@@ -1,13 +1,16 @@
 from lib.ina_sensor_reader import init_ina, read_bus_voltage
 from lib.wind_output import voltage_to_wind_speed, min_scale, max_scale, print_wind_info
 from lib.wind_db import init_db, insert_record
-from lib.wifi_connection import connect, scan
+from lib.is_pico_w import is_pico_w
+#from lib.wifi_connection import connect, scan
 from lib.internal_memory_info import print_memory_info
 #from lib.get_ntp_time import getTimeNTP
 import time
 
 INA3221_ADDR = 0x42
 TIMEZONE = 'Europe/Rome'
+
+IS_PICO_W = is_pico_w()
 
 # Init INA3221 sensor
 ina = None
@@ -18,9 +21,12 @@ except Exception as e:
     ina = None
 
 # Connect to WiFi
-print(scan())
-connection = connect('your_ssid', 'your_password')
-print(connection)
+if IS_PICO_W:
+    from lib.wifi_connection import connect, scan
+
+    print(scan())
+    connection = connect('your_ssid', 'your_password')
+    print(connection)
 
 # Init DB
 db = init_db()
@@ -45,7 +51,7 @@ try:
             insert_record(db, time.time(), None, True)
             break
 
-        time.sleep(0.2)
+        time.sleep(1)
 
 except KeyboardInterrupt:
     print("Interrupted by user.")

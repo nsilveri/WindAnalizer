@@ -1,0 +1,10 @@
+{"d": {"timestamp": "1609459903", "outofscale": "False", "windspeed": "6.1192008"}, "r": 561}
+{"d": {"timestamp": "1609459904", "outofscale": "False", "windspeed": "6.3688"}, "r": 562}
+{"d": {"timestamp": "1609459905", "outofscale": "False", "windspeed": "6.4936004"}, "r": 563}
+{"d": {"timestamp": "1609459906", "outofscale": "False", "windspeed": "4.8712004"}, "r": 564}
+{"d": {"timestamp": "1609459907", "outofscale": "False", "windspeed": "3.49840032"}, "r": 565}
+{"d": {"timestamp": "1609459908", "outofscale": "False", "windspeed": "2.7496002"}, "r": 566}
+{"d": {"timestamp": "1609459909", "outofscale": "True", "windspeed": "2.1256"}, "r": 567}
+{"d": {"timestamp": "1609459910", "outofscale": "True", "windspeed": "1.7512001"}, "r": 568}
+{"d": {"timestamp": "1609459911", "outofscale": "True", "windspeed": "1.5016"}, "r": 569}
+{"d": {"timestamp": "1609459912", "outofscale": "True", "windspeed": "1.252"}, "r": 570}

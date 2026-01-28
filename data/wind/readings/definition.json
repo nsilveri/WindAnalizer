@@ -1,0 +1,1 @@
+{"settings": {"rows_per_page": 10, "max_rows": 10000}, "columns": {"outofscale": {"data_type": "str", "max_length": 10000}, "windspeed": {"data_type": "str", "max_length": 10000}, "timestamp": {"data_type": "str", "max_length": 10000}}}
