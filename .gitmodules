@@ -1,0 +1,3 @@
+[submodule "lib/MicroPyDatabase"]
+	path = lib/MicroPyDatabase
+	url = https://github.com/sungkhum/MicroPyDatabase.git
