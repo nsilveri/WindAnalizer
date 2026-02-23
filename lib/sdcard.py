@@ -16,9 +16,10 @@ https://core-electronics.com.au/guides/makerverse-micro-sd-adapter-micropython-g
 
 from micropython import const
 import time
+from machine import Pin
 
 
-_CMD_TIMEOUT = const(1000)
+_CMD_TIMEOUT = const(2000)
 
 _R1_IDLE_STATE = const(1 << 0)
 # R1_ERASE_RESET = const(1 << 1)
@@ -60,7 +61,7 @@ class SDCard:
     def init_card(self, baudrate):
 
         # init CS pin
-        self.cs.init(self.cs.OUT, value=1)
+        self.cs.init(Pin.OUT, value=1)
 
         # init SPI bus; use low data rate for initialisation
         self.init_spi(100000)
@@ -171,7 +172,7 @@ class SDCard:
             self.spi.readinto(self.tokenbuf, 0xFF)
             if self.tokenbuf[0] == _TOKEN_DATA:
                 break
-            time.sleep(0.0001)
+            time.sleep_ms(1)
         else:
             self.cs(1)
             raise OSError("timeout waiting for response")
