@@ -21,6 +21,7 @@ try:
     # Init SPI communication
     spi = SPI(SPI_BUS,sck=Pin(SCK_PIN), mosi=Pin(MOSI_PIN), miso=Pin(MISO_PIN))
     cs = Pin(CS_PIN)
+    print("SPI communication initialized successfully.")
     sd = sdcard.SDCard(spi, cs)
 
     if FORMAT_SD:
