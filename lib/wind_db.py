@@ -56,7 +56,7 @@ def init_db(db_path='data/wind', table_name='readings'):
 
         # Ensure table exists
         try:
-            db.create_table(table_name, ['timestamp', 'windSpeed', 'outOfScale'])
+            db.create_table(table_name, ['timestamp', 'windSpeed', 'outOfScale', 'message'])
         except Exception:
             # Table likely exists
             pass
@@ -76,7 +76,7 @@ def init_db(db_path='data/wind', table_name='readings'):
         return FileTable(jsonl_path)
 
 
-def insert_record(tbl, timestamp, wind_speed, out_of_scale):
+def insert_record(tbl, timestamp, wind_speed, out_of_scale, message=None):
     if tbl is None:
         return
 
@@ -87,6 +87,7 @@ def insert_record(tbl, timestamp, wind_speed, out_of_scale):
             'timestamp': str(timestamp) if timestamp is not None else '',
             'windspeed': '' if wind_speed is None else str(wind_speed),
             'outofscale': str(bool(out_of_scale)),
+            'message': '' if message is None else str(message),
         }
         tbl.insert(record)
     except Exception as e:
