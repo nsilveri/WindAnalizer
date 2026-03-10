@@ -26,6 +26,38 @@ class FileTable:
             return False
 
 
+def _ensure_table_columns(db_path: str, table_name: str, columns: dict) -> bool:
+    """Best-effort migration: ensure columns exist in micro_py_database definition.json.
+
+    This is safe to run on every boot; it only edits the definition when needed.
+    Returns True if any change was made.
+    """
+    table_name = (table_name or '').lower()
+    definition_path = libpath.join(db_path, table_name, 'definition.json')
+    try:
+        with open(definition_path, 'r') as f:
+            definition = json.loads(f.read() or '{}')
+        definition_columns = definition.get('columns') or {}
+
+        changed = False
+        for col_name, col_def in columns.items():
+            col_key = str(col_name).lower()
+            if col_key not in definition_columns:
+                definition_columns[col_key] = col_def
+                changed = True
+
+        if not changed:
+            return False
+
+        definition['columns'] = definition_columns
+        with open(definition_path, 'w') as f:
+            f.write(json.dumps(definition))
+        return True
+    except Exception:
+        # If anything goes wrong (missing file, permission, etc.) just skip.
+        return False
+
+
 def init_db(db_path='data/wind', table_name='readings'):
     """Try to initialize micro_py_database; if it fails, return a FileTable fallback.
 
@@ -61,6 +93,16 @@ def init_db(db_path='data/wind', table_name='readings'):
             # Table likely exists
             pass
 
+        # If table already exists, it might have been created with an older
+        # schema. Ensure new columns are present (best-effort), then reopen.
+        _ensure_table_columns(
+            db_path,
+            table_name,
+            {
+                'message': {'data_type': 'str', 'max_length': 10000},
+            },
+        )
+
         table = db.open_table(table_name)
 
         # Basic sanity check: table should have insert()
@@ -89,6 +131,13 @@ def insert_record(tbl, timestamp, wind_speed, out_of_scale, message=None):
             'outofscale': str(bool(out_of_scale)),
             'message': '' if message is None else str(message),
         }
+
+        # micro_py_database validates columns strictly; if the table is missing
+        # newer columns, drop them to avoid failing the whole insert.
+        if hasattr(tbl, 'columns') and isinstance(getattr(tbl, 'columns'), dict):
+            allowed = set(k.lower() for k in tbl.columns.keys())
+            record = {k: v for k, v in record.items() if k.lower() in allowed}
+
         tbl.insert(record)
     except Exception as e:
         print('Failed to insert record:', e)

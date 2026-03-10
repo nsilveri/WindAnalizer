@@ -7,6 +7,7 @@ provided.
 Provides:
 - `get_time_ntp(host='pool.ntp.org')` -> RTC tuple or None
 - `get_time(api_key=None, timezone=None)` -> RTC tuple or None
+- `getTimeNTP(timezone=None, host='pool.ntp.org')` -> RTC tuple or None (compat)
 """
 
 try:
@@ -99,6 +100,23 @@ def get_time(api_key=None, timezone=None):
     Returns an RTC tuple or None.
     """
     t = get_time_ntp()
+    if t is not None:
+        return t
+    if api_key and timezone:
+        return _get_time_ipgeo(api_key, timezone)
+    return None
+
+
+def getTimeNTP(timezone=None, host=NTP_HOST, timeout=1, api_key=None):
+    """Compatibility wrapper (camelCase) used by older scripts.
+
+    - Tries NTP first (UTC). If `api_key` is provided, falls back to HTTP using
+      the given `timezone` (e.g. 'Europe/Rome').
+    - Returns an RTC tuple or None.
+
+    Note: NTP returns UTC; this function does not apply timezone offsets.
+    """
+    t = get_time_ntp(host=host, timeout=timeout)
     if t is not None:
         return t
     if api_key and timezone:
