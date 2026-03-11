@@ -4,3 +4,5 @@
 .lh/
 
 wifi_credentials.py
+
+secrets.py
